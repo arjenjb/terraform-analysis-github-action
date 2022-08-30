@@ -1,0 +1,16 @@
+name: 'Terraform Plan Analyzer'
+description: 'Greet someone and record the time'
+inputs:
+  plan:  # id of input
+    description: 'The output of a `terraform plan -no-color` command'
+    required: true
+
+outputs:
+  status:
+    description: 'If parsing of the terraform output succeeded `ok`, `failed` otherwise'
+  summary: # id of output
+    description: 'A pruned summary suitable to put in a PR for example'
+
+runs:
+  using: 'node16'
+  main: 'index.js'

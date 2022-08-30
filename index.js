@@ -6,7 +6,7 @@ try {
 
     const {
         status, hasChanges, mutations, report
-    } = parse(plan)
+    } = parse(plan.split("\n"))
 
     console.info(`Status: ${status}`)
     console.info(`Changes: ${hasChanges}`)

@@ -1,7 +1,7 @@
 const {LineReader, StringReader } = require('./reader')
 
-function parse(data) {
-    const r = new LineReader(data)
+function parse(lines) {
+    const r = new LineReader(lines)
 
     // Skip all the logging at the top
     r.consumeNonEmptyLines()
@@ -55,7 +55,7 @@ function parse(data) {
             status: 'failed',
             mutations: {},
             hasChanges: true,
-            report: data
+            report: lines
         }
     }
 }

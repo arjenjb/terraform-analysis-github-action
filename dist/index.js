@@ -2795,8 +2795,8 @@ module.exports = {
 
 const {LineReader, StringReader } = __nccwpck_require__(694)
 
-function parse(data) {
-    const r = new LineReader(data)
+function parse(lines) {
+    const r = new LineReader(lines)
 
     // Skip all the logging at the top
     r.consumeNonEmptyLines()
@@ -2850,7 +2850,7 @@ function parse(data) {
             status: 'failed',
             mutations: {},
             hasChanges: true,
-            report: data
+            report: lines
         }
     }
 }
@@ -2997,7 +2997,7 @@ try {
 
     const {
         status, hasChanges, mutations, report
-    } = parse(plan)
+    } = parse(plan.split("\n"))
 
     console.info(`Status: ${status}`)
     console.info(`Changes: ${hasChanges}`)

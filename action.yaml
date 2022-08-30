@@ -1,5 +1,5 @@
 name: 'Terraform Plan Analyzer'
-description: 'Greet someone and record the time'
+description: 'Analyze the output of `terraform plan`'
 inputs:
   plan: # id of input
     description: 'The output of a `terraform plan -no-color` command'

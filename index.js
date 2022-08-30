@@ -3,15 +3,14 @@ const {parse} = require('./terraform')
 
 try {
     const plan = core.getInput('plan');
-    console.debug("Plan input: ", plan)
 
     const {
         status, hasChanges, mutations, report
     } = parse(plan)
 
-    console.debug("Status: ", status)
-    console.debug("Changes: ", hasChanges)
-    console.debug("Mutations: ", mutations)
+    console.info(`Status: ${status}`)
+    console.info(`Changes: ${hasChanges}`)
+    console.info(`Mutations: ${mutations}`)
 
     core.setOutput("status", status);
     core.setOutput("hasChanges", hasChanges);

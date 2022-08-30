@@ -1,14 +1,18 @@
 name: 'Terraform Plan Analyzer'
 description: 'Greet someone and record the time'
 inputs:
-  plan:  # id of input
+  plan: # id of input
     description: 'The output of a `terraform plan -no-color` command'
     required: true
 
 outputs:
   status:
     description: 'If parsing of the terraform output succeeded `ok`, `failed` otherwise'
-  summary: # id of output
+  hasChanges:
+    description: 'If parsing of the terraform output succeeded `ok`, `failed` otherwise'
+  mutations:
+    description: 'An object containing all the number of mutations that will be performed'
+  report: # id of output
     description: 'A pruned summary suitable to put in a PR for example'
 
 runs:

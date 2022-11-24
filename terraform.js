@@ -16,8 +16,9 @@ function parse(lines) {
             hasChanges: false,
             report: r.next()
         }
+    }
 
-    } else if (r.peek().startsWith('Terraform used the selected')) {
+    if (r.peek().startsWith('Terraform used the selected') || (r.peek().startsWith('Note: '))) {
         r.consumeNonEmptyLines()
         r.consumeEmptyLines()
 

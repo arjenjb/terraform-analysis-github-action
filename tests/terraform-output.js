@@ -1501,9 +1501,51 @@ Note: You didn't use the -out option to save this plan, so Terraform can't
 guarantee to take exactly these actions if you run "terraform apply" now.
 
 Process finished with exit code 0
+`;
+
+const planOutputWithoutCruft = `
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  # aws_nat_gateway.default will be updated in-place
+  ~ resource "aws_nat_gateway" "default" {
+        id                   = "nat-05f6c5b9858dd9689"
+      ~ tags                 = {
+          ~ "Name"       = "Europe Test Default NAT" -> "Europe Test NAT"
+            "managed_by" = "terraform"
+            "realm"      = "europe-test"
+        }
+      ~ tags_all             = {
+          ~ "Name"       = "Europe Test Default NAT" -> "Europe Test NAT"
+            # (2 unchanged elements hidden)
+        }
+        # (7 unchanged attributes hidden)
+    }
+
+  # aws_subnet.public-1a will be updated in-place
+  ~ resource "aws_subnet" "public-1a" {
+        id                                             = "subnet-0df0bf4bd75eeaa11"
+      ~ tags                                           = {
+            "Name"       = "Europe Test Public 1a"
+          + "managed_by" = "terraform"
+          + "realm"      = "europe-test"
+        }
+      ~ tags_all                                       = {
+          + "managed_by" = "terraform"
+          + "realm"      = "europe-test"
+            # (1 unchanged element hidden)
+        }
+        # (15 unchanged attributes hidden)
+    }
+
+Plan: 0 to add, 2 to change, 0 to destroy.
 `
 
 module.exports = {
     planOutput,
-    planOutputWithLocalChanges
+    planOutputWithLocalChanges,
+    planOutputWithoutCruft,
 }

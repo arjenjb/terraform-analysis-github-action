@@ -2,23 +2,44 @@ const {LineReader, StringReader } = require('./reader')
 
 function parse(lines) {
     const r = new LineReader(lines)
+    const prefix = []
 
-    // Skip all the logging at the top
-    r.consumeNonEmptyLines()
+    // Skip the cruft
+    while (! r.atEnd()) {
+        const p = r.peek()
+        if (p.startsWith("No changes")
+            || p.startsWith("Terraform used the selected")
+            || p.startsWith("Note: ")
+        ) {
+            break
+        }
 
-    // Consume empty lines
-    r.consumeEmptyLines()
+        // skip it
+        r.next()
+    }
 
-    if (r.peek().startsWith("No changes")) {
+    // Find the notes
+    while (! r.atEnd()) {
+        const p = r.peek()
+        if (p.startsWith("No changes")
+            || p.startsWith("Terraform used the selected")) {
+            break
+        }
+
+        prefix.push(r.next())
+    }
+
+    top = r.peek()
+    if (top.startsWith("No changes")) {
         return {
             status: 'ok',
             mutations: {},
             hasChanges: false,
-            report: r.next()
+            report: prefix.join("\n") + r.next()
         }
     }
 
-    if (r.peek().startsWith('Terraform used the selected') || (r.peek().startsWith('Note: '))) {
+    if (top.startsWith('Terraform used the selected') || (r.peek().startsWith('Note: '))) {
         r.consumeNonEmptyLines()
         r.consumeEmptyLines()
 
@@ -49,14 +70,14 @@ function parse(lines) {
             status: 'ok',
             hasChanges: true,
             mutations,
-            report
+            report: prefix.join("\n") + report
         }
     } else {
         return {
             status: 'failed',
             mutations: {},
             hasChanges: true,
-            report: lines
+            report: lines.join("\n")
         }
     }
 }
